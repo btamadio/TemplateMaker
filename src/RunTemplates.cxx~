@@ -1,0 +1,2 @@
+#include "TemplateMaker.cxx"
+class TemplateMaker;
