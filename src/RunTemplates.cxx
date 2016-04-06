@@ -17,4 +17,7 @@ int main(int argc, char *argv[]){
   else{ sigFileName = argv[2]; }
   string bkgFileList = argv[1];
   TemplateMaker tm ( bkgFileList, sigFileName );
+  tm.setTemplateFileName("test.root");
+  tm.isMC();
+  tm.makeTemplates();
 }
