@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
     exit(EXIT_FAILURE);
   }
   string sigFileName = "";
-  //int dsid = stoi(argv[2]);
+  int dsid = stoi(argv[2]);
   //  if (argc == 2){ sigFileName = ""; }
   //  else{ sigFileName = argv[2]; }
   //  if (argc == 4){
@@ -21,10 +21,11 @@ int main(int argc, char *argv[]){
   //  }
   string bkgFileList = argv[1];
   TemplateMaker tm ( bkgFileList, sigFileName );
-  tm.inputList();
+  //  tm.inputList();
   tm.setTemplateFileName("test.root");
   tm.isMC();
-  //tm.setDSID(dsid);
+  tm.setDSID(dsid);
   tm.setLumi(3.2);
   tm.makeTemplates();
+
 }

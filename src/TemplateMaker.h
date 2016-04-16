@@ -19,19 +19,19 @@ namespace TM{
     float weight;
     float weight_pileup;
     vector<string> passedTriggers;
-    vector<float> jet_pt;
-    vector<float> jet_eta;
-    vector<float> jet_phi;
-    vector<float> jet_E;
-    vector<int> jet_clean_passLooseBad;
-    vector<int> jet_clean_passLooseBadUgly;
-    vector<int> jet_clean_passTightBad;
-    vector<int> jet_clean_passTightBadUgly;
-    vector<int> jet_MV2c20_isFix70;
-    vector<float> fatjet_pt;
-    vector<float> fatjet_eta;
-    vector<float> fatjet_phi;
-    vector<float> fatjet_M;
+    vector<float> *jet_pt;
+    vector<float> *jet_eta;
+    vector<float> *jet_phi;
+    vector<float> *jet_E;
+    vector<int> *jet_clean_passLooseBad;
+    vector<int> *jet_clean_passLooseBadUgly;
+    vector<int> *jet_clean_passTightBad;
+    vector<int> *jet_clean_passTightBadUgly;
+    vector<int> *jet_MV2c20_isFlt70;
+    vector<float> *fatjet_pt;
+    vector<float> *fatjet_eta;
+    vector<float> *fatjet_phi;
+    vector<float> *fatjet_m;
     Event(){}
   };
 }
@@ -39,6 +39,7 @@ class TemplateMaker{
  public:
   TemplateMaker(std::string,std::string);
   ~TemplateMaker();
+  int m_dsid;
   void makeTemplates();
   void sampleJetMass(string);
   void isMC() { m_isMC = true; }
@@ -60,11 +61,17 @@ class TemplateMaker{
   void setTemplateFileName( string s ){ m_templateFileName = s; }
   void setJetCleanString( string s ){ m_jetCleanStr = s; }
   void setDeltaEtaCut( float e ){ m_deltaEtaCut = e; }
+  void setLumi( float lumi ){ m_lumi = lumi*1E6; }
+  void setDSID( int d ) {m_dsid = d; }
   void setupTree();
   void calcDenoms();
+  void inputList(){ m_inputList = true; }
+  
  private:
+  float m_lumi;
   TH1F m_cutFlowHist;
   bool m_isMC;
+  bool m_inputList;
   string m_bkgFileList;
   string m_sigFileName;
   bool m_injectSignal;
@@ -87,9 +94,10 @@ class TemplateMaker{
   TFile *m_templateFile;
   TTree *m_tree;
   vector<string> m_inputFileNames;
-  map<int,int> m_denoms;
+  map<int,int> m_initialSumOfWeights;
+  map<int,int> m_initialEvents;
   string m_jetCleanStr;
   float m_deltaEtaCut;
-  TM::Event m_event;
+  TM::Event *m_event;
 };
 #endif
